@@ -1,0 +1,3 @@
+C:/Users/aschw/Projekte/c++/c++_multi_threading_basics/build/CMakeFiles/c++_multi_threading_basics.dir
+C:/Users/aschw/Projekte/c++/c++_multi_threading_basics/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/aschw/Projekte/c++/c++_multi_threading_basics/build/CMakeFiles/ZERO_CHECK.dir
