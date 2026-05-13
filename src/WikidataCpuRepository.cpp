@@ -4,40 +4,39 @@
 #include <sstream>
 
 WikidataCpuRepository::WikidataCpuRepository(const HttpClient& http_client)
-    : httpClient(http_client) {
+    : http_client(http_client) {
 }
 
 // Baut die SPARQL-Query dynamisch
-std::string WikidataCpuRepository::build_cpu_thread_query(int minimum_threads) const 
+std::string WikidataCpuRepository::build_cpu_thread_query() const 
 {
     std::ostringstream query;
 
     query << R"(
     SELECT ?cpu ?cpuLabel ?cores ?threads WHERE {
         ?cpu wdt:P7443 ?threads.
-        FILTER(?threads >= )" << minimum_threads << R"()
         OPTIONAL { ?cpu wdt:P1141 ?cores. }
     SERVICE wikibase:label {
         bd:serviceParam wikibase:language "en".
         }
     }
     ORDER BY DESC(?threads)
-    LIMIT 50
+    LIMIT 1
     )";
 
     return query.str();
 }
 
-std::vector<Cpu> WikidataCpuRepository::find_cpus_with_atLeast_threads(int minimum_threads) const 
+std::vector<Cpu> WikidataCpuRepository::find_cpu_with_max_threads() const 
 {
-    std::string query = build_cpu_thread_query(minimum_threads);
+    std::string query = build_cpu_thread_query();
 
     std::map<std::string, std::string> formFields = {
         {"query", query},
         {"format", "json"}
     };
 
-    std::string jsonText = httpClient.post_form(
+    std::string jsonText = http_client.post_form(
         "https://query.wikidata.org/sparql",
         formFields
     );

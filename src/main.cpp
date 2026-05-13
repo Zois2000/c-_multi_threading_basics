@@ -6,23 +6,17 @@
 
 int main() {
     try {
-        // Mindestanzahl gewünschter CPU-Threads
-        int minimumThreads = 16;
-
         // HTTP-Modul erstellen
         HttpClient httpClient;
 
         // Repository für CPU-Daten erstellen
         WikidataCpuRepository cpuRepository(httpClient);
 
-        // CPUs von Wikidata laden
-        std::vector<Cpu> cpus =
-            cpuRepository.find_cpus_with_atLeast_threads(minimumThreads);
+        // CPU mit maximaler Thread-Anzahl laden
+        std::vector<Cpu> cpus = cpuRepository.find_cpu_with_max_threads();
 
         // Ergebnis ausgeben
-        std::cout << "CPUs mit mindestens "
-                  << minimumThreads
-                  << " Threads:\n\n";
+        std::cout << "CPU mit den meisten Threads:\n\n";
 
         for (const Cpu& cpu : cpus) {
             std::cout << cpu.name

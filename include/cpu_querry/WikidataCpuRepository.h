@@ -8,10 +8,10 @@ class WikidataCpuRepository {
 public:
     explicit WikidataCpuRepository(const HttpClient& http_client);
 
-    std::vector<Cpu> find_cpus_with_atLeast_threads(int minimum_threads) const;
+    std::vector<Cpu> find_cpu_with_max_threads() const;
 
 private:
-    const HttpClient& httpClient;
+    const HttpClient& http_client;
 
-    std::string build_cpu_thread_query(int minimum_threads) const;
+    std::string build_cpu_thread_query() const;
 };
